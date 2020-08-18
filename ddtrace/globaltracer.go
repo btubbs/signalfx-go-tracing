@@ -1,14 +1,15 @@
 package ddtrace // import "github.com/signalfx/signalfx-go-tracing/ddtrace"
 
 import (
+	"sync"
+
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/log"
-	"sync"
 )
 
 var (
 	mu           sync.RWMutex // guards globalTracer
-	globalTracer Tracer = &NoopTracer{}
+	globalTracer Tracer       = &NoopTracer{}
 )
 
 // SetGlobalTracer sets the global tracer to t.
@@ -108,7 +109,7 @@ func (NoopSpan) SetBaggageItem(restrictedKey, value string) opentracing.Span {
 
 // Tracer implements ddtrace.Span.
 func (NoopSpan) Tracer() opentracing.Tracer {
-	panic("not implemented")
+	return NoopTracer{}
 }
 
 // LogEvent implements ddtrace.Span.
