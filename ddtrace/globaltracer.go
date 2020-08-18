@@ -52,7 +52,7 @@ func (NoopTracer) StartSpan(operationName string, opts ...StartSpanOption) Span 
 func (NoopTracer) SetServiceInfo(name, app, appType string) {}
 
 // Extract implements ddtrace.Tracer.
-func (NoopTracer) Extract(carrier interface{}) (SpanContext, error) {
+func (NoopTracer) Extract(carrier interface{}, _ interface{}) (SpanContext, error) {
 	return NoopSpanContext{}, nil
 }
 
